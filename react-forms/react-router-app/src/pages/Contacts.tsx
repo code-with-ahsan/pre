@@ -1,38 +1,19 @@
-import { Form, Link, useLoaderData, ActionFunction } from "react-router-dom";
-import { createContact, getContacts } from "../api/contactsApi";
-
-export const contactsLoader = async () => {
-  const contacts = await getContacts();
-  return {
-    contacts,
-  };
-};
-
-export const createContactAction: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  const first = formData.get("first")?.toString();
-  const last = formData.get("last")?.toString();
-  const email = formData.get("email")?.toString();
-  if (!first || !last || !email) {
-    throw new Error("First name, last name, and email are required!");
-  }
-  const contact = await createContact({
-    name: {
-      first,
-      last,
-    },
-    email,
-  });
-  return { contact };
-};
+import { Link } from "react-router-dom";
+import { Contact } from "../types";
+import { useEffect, useState } from "react";
+import { getContacts } from "../api/contactsApi";
 
 const ContactsPage = () => {
-  const { contacts } = useLoaderData() as Awaited<
-    ReturnType<typeof contactsLoader>
-  >;
+  const [contacts, setContacts] = useState<Contact[]>([]);
+
+  useEffect(() => {
+    getContacts().then(contactsFromServer => {
+      setContacts(contactsFromServer)
+    })
+  }, [])
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <Form method="post" className="flex flex-col gap-4 items-center">
+      <section className="flex flex-col gap-4 items-center">
         <h2 className="text-center text-lg">Add new contact</h2>
         <label htmlFor="firstName" className="form-control w-full max-w-xs">
           <div className="label">
@@ -75,7 +56,7 @@ const ContactsPage = () => {
         <button className="btn btn-primary btn-outline max-w-xs">
           Submit{" "}
         </button>
-      </Form>
+      </section>
 
       <section className="md:col-span-2">
         <h1 className="text-center text-lg">Contacts List</h1>
@@ -125,23 +106,11 @@ const ContactsPage = () => {
                       </Link>
                     </td>
                     <th>
-                      <Form
-                        method="post"
-                        action={`${contact.login.uuid}/destroy`}
-                        onSubmit={(event) => {
-                          if (
-                            !confirm(
-                              "Please confirm you want to delete this contact.",
-                            )
-                          ) {
-                            event.preventDefault();
-                          }
-                        }}
-                      >
+                      <div>
                         <button className="btn btn-outline btn-error btn-xs">
                           delete
                         </button>
-                      </Form>
+                      </div>
                     </th>
                   </tr>
                 );
