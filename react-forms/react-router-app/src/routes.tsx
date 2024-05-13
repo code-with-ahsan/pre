@@ -4,11 +4,12 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import ContactsPage, { contactsLoader } from "./pages/Contacts";
+import ContactsPage, { contactsLoader, createContactAction } from "./pages/Contacts";
 import NotFoundPage from "./pages/NotFound";
 import RootLayout from "./pages/Root";
 import ContactDetailPage, { contactDetailsLoader } from "./pages/ContactDetail";
 import { ContactNotFoundPage } from "./pages/ContactNotFound";
+import { destroyContactAction } from "./pages/DestroyContact";
 
 const appRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -18,8 +19,11 @@ const appRouter = createBrowserRouter(
         element={<Navigate to={"contacts"} replace={true} />}
       />
 
+      <Route action={destroyContactAction} path="contacts/:contactId/destroy" />
+
       <Route
         path="contacts"
+        action={createContactAction}
         element={<ContactsPage />}
         loader={contactsLoader}
       />

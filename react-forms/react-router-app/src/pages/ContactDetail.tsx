@@ -1,4 +1,4 @@
-import { Params, useLoaderData } from "react-router-dom";
+import { Form, Params, useLoaderData } from "react-router-dom";
 import { getContactById } from "../api/contactsApi";
 
 type LoaderArgs = {
@@ -48,7 +48,16 @@ const ContactDetailPage = () => {
         </h2>
         <p>{contact.email}</p>
         <div className="card-actions justify-end">
-          <button className="btn btn-outline btn-error btn-sm">delete</button>
+          <Form method="POST" action={`/contacts/${contact.login.uuid}/destroy`} onSubmit={(event) => {
+            const result = confirm('Please confirm deletion of this contact.');
+            if (!result) {
+              event.preventDefault();
+            }
+          }}>
+            <button className="btn btn-outline btn-error btn-xs">
+              delete
+            </button>
+          </Form>
         </div>
       </div>
     </div>
