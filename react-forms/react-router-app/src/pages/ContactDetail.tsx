@@ -1,21 +1,24 @@
-import { getContactById, getContacts } from "../api/contactsApi";
-import { useState, useEffect } from "react";
-import { Contact } from "../types";
-import { useParams } from "react-router-dom";
+import { getContactById } from "../api/contactsApi";
+import { Form, Params, useLoaderData } from "react-router-dom";
 
+export const contactByIdLoader = async ({
+  params
+}: {
+  params: Params
+}) => {
+  const { contactId } = params;
+  const contact = await getContactById(contactId!);
+  if (!contact) {
+    throw new Error("Contact not found.");
+  }
+  return {
+    contact
+  }
+}
 
 const ContactDetailPage = () => {
-  const [contact, setContact] = useState<Contact | null>(null);
-  const {contactId} = useParams();
-  useEffect(() => {
-    getContactById(contactId!).then(contactFromServer => {
-      setContact(contactFromServer!)
-    })
-  }, [])
+  const { contact } = useLoaderData() as Awaited<ReturnType<typeof contactByIdLoader>>;
 
-  if (!contact) {
-    return <div className="p-4 text-center">Loading...</div>
-  }
   return (
     <div className="card card-compact w-96 mx-auto bg-base-100 shadow-xl">
       <div className="card-body items-center text-center">
@@ -41,9 +44,16 @@ const ContactDetailPage = () => {
         </h2>
         <p>{contact.email}</p>
         <div className="card-actions justify-end">
-          <div>
-            <button className="btn btn-outline btn-error btn-sm">delete</button>
-          </div>
+          <Form method="POST" onSubmit={(event) => {
+            const result = confirm('Confirm deletion of this contact.');
+            if (!result) {
+              event.preventDefault();
+            }
+          }} action={`/contacts/${contact.login.uuid}/destroy`}>
+            <button className="btn btn-outline btn-error btn-sm">
+              delete
+            </button>
+          </Form>
         </div>
       </div>
     </div>
