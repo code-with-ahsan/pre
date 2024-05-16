@@ -10,6 +10,7 @@ import ContactDetailPage, { contactByIdLoader } from "./pages/ContactDetail";
 import { ContactNotFoundPage } from "./pages/ContactNotFound";
 import ContactsPage, { contactsLoader, createContactAction } from "./pages/Contacts";
 import { destroyContactAction } from "./pages/ContactDestroy";
+import About from "./pages/About/About";
 
 const appRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -19,7 +20,8 @@ const appRouter = createBrowserRouter(
         element={<Navigate to={"contacts"} replace={true} />}
       />
 
-      <Route action={destroyContactAction} path="contacts/:contactId/destroy" />
+
+      <Route path="about" element={<About />} />
 
       <Route
         path="contacts"
@@ -34,6 +36,9 @@ const appRouter = createBrowserRouter(
         element={<ContactDetailPage />}
         errorElement={<ContactNotFoundPage />}
       />
+
+      <Route action={destroyContactAction} path="contacts/:contactId/destroy" />
+
     </Route>,
   ),
 );
