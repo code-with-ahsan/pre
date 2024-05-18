@@ -11,6 +11,8 @@ import { ContactNotFoundPage } from "./pages/ContactNotFound";
 import ContactsPage, { contactsLoader, createContactAction } from "./pages/Contacts";
 import { destroyContactAction } from "./pages/ContactDestroy";
 import About from "./pages/About/About";
+import Info from "./pages/About/Info";
+import Settings from "./pages/About/Settings";
 
 const appRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -21,7 +23,14 @@ const appRouter = createBrowserRouter(
       />
 
 
-      <Route path="about" element={<About />} />
+      <Route path="about" element={<About />}>
+        <Route index={true} element={<div>
+          <h1 className="text-2xl">This is the About page</h1>
+          <p>Click one of the menu items to navigate</p>
+        </div>} />
+        <Route path="info" element={<Info />} />
+        <Route path="settings" element={<Settings />} />
+      </Route>
 
       <Route
         path="contacts"

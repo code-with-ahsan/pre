@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -10,10 +10,14 @@ const Header = () => {
         <span className="flex-1"></span>
         <ul className="flex gap-4 items-center">
           <li>
-            <Link className="btn btn-ghost btn-sm" to='/contacts'>Contacts</Link>
+            <NavLink className={({ isActive }) => {
+              return isActive ? "btn btn-outline btn-sm btn-primary" : "btn btn-ghost btn-sm"
+            }} to='/contacts'>Contacts</NavLink>
           </li>
           <li>
-            <Link className="btn btn-ghost btn-sm" to='/about'>About</Link>
+            <NavLink className={({ isActive }) => {
+              return isActive ? "btn btn-outline btn-sm btn-primary" : "btn btn-ghost btn-sm"
+            }} to='/about'>About</NavLink>
           </li>
         </ul>
       </div>
