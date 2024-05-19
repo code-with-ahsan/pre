@@ -21,9 +21,10 @@ const Counter = () => {
   }
   return (
     <>
-      <h2 data-testid="counterValue" className='text-3xl mb-8'>
+      <h2 className="mb-10 text-xl">Simple Counter</h2>
+      <h3 data-testid="counterValue" className='text-3xl mb-8'>
         Count is {count}
-      </h2>
+      </h3>
       <div className="actions flex gap-4 items-center">
         <button data-testid="decrementBtn" onClick={decrement}>
           Decrement

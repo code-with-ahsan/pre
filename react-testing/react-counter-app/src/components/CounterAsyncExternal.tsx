@@ -1,22 +1,18 @@
 import { useState, useEffect, FC } from 'react';
+import { getUsersCount } from '../api/users.api';
 
-export type CounterAsyncProps = {
-  fetchInitialCount: () => Promise<number>
-}
-
-
-const CounterAsync: FC<CounterAsyncProps> = ({ fetchInitialCount }) => {
+const CounterAsyncExternal = () => {
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const FAKE_TIMEOUT = 1500;
 
   useEffect(() => {
     setLoading(true);
-    fetchInitialCount().then((initialCount) => {
+    getUsersCount().then((initialCount) => {
       setCount(initialCount);
       setLoading(false);
     });
-  }, [fetchInitialCount]);
+  }, [getUsersCount]);
 
   const incrementAsync = () => {
     setLoading(true);
@@ -44,7 +40,7 @@ const CounterAsync: FC<CounterAsyncProps> = ({ fetchInitialCount }) => {
 
   return (
     <div>
-      <h2 className="mb-10 text-xl">Async Counter</h2>
+      <h2 className="mb-10 text-xl">Async External Counter</h2>
       {loading ? <h3 className='text-3xl mb-8'>Loading...</h3> : <h3 className='text-3xl mb-8'>
         Count is {count}
       </h3>}
@@ -64,4 +60,4 @@ const CounterAsync: FC<CounterAsyncProps> = ({ fetchInitialCount }) => {
   );
 }
 
-export default CounterAsync;
+export default CounterAsyncExternal;
