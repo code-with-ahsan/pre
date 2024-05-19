@@ -1,33 +1,37 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
 
+  const increment = () => {
+    setCount((count) => count + 1)
+  }
+
+  const decrement = () => {
+    setCount((count) => count - 1)
+  }
+    
+  const reset = () => {
+    setCount(0)
+  }
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1 data-testid="headline">Counter React App</h1>
+      <h1 data-testid="headline" className='text-xl'>Counter React App</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <h2 className='text-3xl mb-8'>
+          Count is {count}
+        </h2>
+        <div className="actions flex gap-4 items-center">
+          <button onClick={decrement}>
+            Decrement
+          </button><button onClick={reset}>
+            Reset
+          </button><button onClick={increment}>
+            Increment
+          </button>
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
