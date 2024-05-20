@@ -15,7 +15,7 @@ const CounterAsync: FC<CounterAsyncProps> = ({ fetchInitialCount }) => {
       setCount(initialCount);
       setLoading(false);
     });
-  }, [fetchInitialCount]);
+  }, []);
 
   const incrementAsync = () => {
     setLoading(true);

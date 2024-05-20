@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect } from 'react';
 import { getUsersCount } from '../api/users.api';
 
 const CounterAsyncExternal = () => {
@@ -12,7 +12,7 @@ const CounterAsyncExternal = () => {
       setCount(initialCount);
       setLoading(false);
     });
-  }, [getUsersCount]);
+  }, []);
 
   const incrementAsync = () => {
     setLoading(true);
