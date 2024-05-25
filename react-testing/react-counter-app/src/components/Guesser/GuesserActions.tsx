@@ -16,12 +16,12 @@ const GuesserActions = () => {
       guessValue(guessInputEl.value);
       form.reset();
     }} className="flex flex-col items-center gap-4 text-center">
-      <Input disabled={state !== 'idle'} name="guess" type="number" min={1} max={5} placeholder="type your guess here.." className="max-w-56 mx-auto" />
+      <Input data-testid="guessInputEl" disabled={state !== 'idle'} name="guess" type="number" min={1} max={5} placeholder="type your guess here.." className="max-w-56 mx-auto" />
       {
-        state === 'idle' ? <Button>Submit</Button> :<Button onClick={(ev) => {
+        state === 'idle' ? <Button data-testid="submitBtn">Submit</Button> :<Button onClick={(ev) => {
           ev.preventDefault();
           randomizeValue();
-        }}>Try again</Button>
+        }} data-testid="tryAgainBtn">Try again</Button>
       }
     </form>
   )

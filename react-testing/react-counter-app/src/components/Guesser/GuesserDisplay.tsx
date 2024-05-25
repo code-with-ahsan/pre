@@ -1,8 +1,9 @@
 import { useContext } from "react"
-import { GuesserContext, MAX_NUM } from "./GuesserContext"
+import { GuesserContext } from "./GuesserContext"
 import guessImage from "../../assets/guess.png";
 import sadImage from "../../assets/sad.png";
 import happyImage from "../../assets/happy.png";
+import { MAX_NUM } from "@/lib/randomizer";
 
 const GuesserDisplay = () => {
   const { randomValue, state } = useContext(GuesserContext);
