@@ -1,6 +1,5 @@
 import { useContext } from "react"
-import { GuesserContext } from "./GuesserContext"
-import { MAX_NUM } from "@/lib/randomizer";
+import { GuesserContext, MAX_NUM } from "./GuesserContext"
 import guessImage from "../../assets/guess.png";
 import sadImage from "../../assets/sad.png";
 import happyImage from "../../assets/happy.png";
