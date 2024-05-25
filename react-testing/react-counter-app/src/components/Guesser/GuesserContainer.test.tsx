@@ -61,6 +61,7 @@ describe('GuesserContainer component', () => {
     });
 
     expect(screen.getByTestId('tryAgainBtn')).toBeInTheDocument();
+    expect(screen.getByTestId('guessInputEl')).toBeDisabled();
   });
 
   it('should reset the UI on try again btn click', async () => {
