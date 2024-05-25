@@ -1,16 +1,21 @@
 import './App.css'
-import Counter from './components/Counter'
-import CounterAsync from './components/CounterAsync'
-import CounterAsyncExternal from './components/CounterAsyncExternal';
+import GuesserContainer from './components/Guesser/GuesserContainer';
+import { ThemeProvider } from "@/components/theme-provider"
+import { GuesserContextProvider } from './components/Guesser/GuesserContext';
+
 
 function App() {
   return (
-    <>
-      <h1 data-testid="headline" className='text-xl'>Counter React App</h1>
-      <div className="card">
-        <CounterAsyncExternal />
+    <ThemeProvider defaultTheme='dark' storageKey='app-ui-theme'>
+      <div className="flex flex-col h-full justify-center">
+        <h1 data-testid="headline" className='text-3xl'>Guess the number</h1>
+        <div className="card">
+          <GuesserContextProvider>
+            <GuesserContainer />
+          </GuesserContextProvider>
+        </div>
       </div>
-    </>
+    </ThemeProvider>
   )
 }
 

@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { act } from 'react';
 import CounterAsyncExternal from './CounterAsyncExternal';
-import { getUsersCount } from '../api/users.api';
+import { getUsersCount } from '../../api/users.api';
 
 vi.mock('../api/users.api', () => {
   return {

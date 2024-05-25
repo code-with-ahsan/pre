@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getUsersCount } from '../api/users.api';
+import { getUsersCount } from '../../api/users.api';
 
 const CounterAsyncExternal = () => {
   const [count, setCount] = useState(0);
