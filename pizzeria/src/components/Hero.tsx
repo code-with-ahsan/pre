@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <div className="hero min-h-[calc(100vh-66px)] bg-base-200">
+    <div className="hero min-h-[calc(100vh-66px)] bg-base-100">
       <div className="hero-content flex-col lg:flex-row-reverse gap-8">
         <img
           src="images/hero.webp"

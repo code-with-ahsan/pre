@@ -3,6 +3,7 @@ export type Pizza = {
   ingredients: string[];
   price: number;
   image: string;
+  id: string;
 };
 
 export const MENU_ITEMS: Pizza[] = [
@@ -11,12 +12,14 @@ export const MENU_ITEMS: Pizza[] = [
     ingredients: ["Tomato Sauce", "Mozzarella Cheese", "Basil"],
     price: 8.99,
     image: "margherita.webp",
+    id: "f438d4e6-9b8c-49f5-9740-e513c0fecce7",
   },
   {
     title: "Pepperoni",
     ingredients: ["Tomato Sauce", "Mozzarella Cheese", "Pepperoni"],
     price: 9.99,
     image: "pepperoni.webp",
+    id: "044dbc0d-aae9-415d-877a-cc3da8f5a9f3",
   },
   {
     title: "BBQ Chicken",
@@ -28,6 +31,7 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 10.99,
     image: "bbq-chicken.webp",
+    id: "22f02922-7957-45a5-bef4-c8d86e867bf8",
   },
   {
     title: "Veggie Delight",
@@ -41,12 +45,14 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 9.49,
     image: "veggie-delight.webp",
+    id: "fd9596c7-db9b-4c1b-ad73-ff69ce156923",
   },
   {
     title: "Hawaiian",
     ingredients: ["Tomato Sauce", "Mozzarella Cheese", "Ham", "Pineapple"],
     price: 10.49,
     image: "hawaiian.webp",
+    id: "092f1d7a-bd24-49b7-8078-4a097414276f",
   },
   {
     title: "Meat Lovers",
@@ -60,6 +66,7 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 11.99,
     image: "meat-lovers.webp",
+    id: "afdaeb05-6ad9-4ab7-8d6b-ab5aa12aed77",
   },
   {
     title: "Buffalo Chicken",
@@ -71,6 +78,7 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 10.99,
     image: "buffalo-chicken.webp",
+    id: "6d947ae5-19a8-485c-8473-a37b376c8c47",
   },
   {
     title: "Four Cheese",
@@ -83,6 +91,7 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 10.49,
     image: "4-cheese.webp",
+    id: "c4a3f995-391e-4218-a370-53b8df98c06a",
   },
   {
     title: "Spinach and Feta",
@@ -94,6 +103,7 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 9.99,
     image: "spinach-feta.webp",
+    id: "0c427ecf-e84e-4d9f-9d8f-53ee3e08db9a",
   },
   {
     title: "Supreme",
@@ -109,12 +119,14 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 12.49,
     image: "supreme.webp",
+    id: "6840c4ee-926f-4747-984c-db4ae4017c43",
   },
   {
     title: "Mushroom and Truffle",
     ingredients: ["Truffle Sauce", "Mozzarella Cheese", "Mushrooms"],
     price: 11.49,
     image: "mushroom-truffle.webp",
+    id: "1619af4a-21a4-4159-bb17-b1a74ccc9857",
   },
   {
     title: "Pesto Chicken",
@@ -126,6 +138,7 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 10.99,
     image: "pesto-chicken.webp",
+    id: "f6490336-6293-4f50-bd04-e45b4361f4fb",
   },
   {
     title: "Taco Pizza",
@@ -140,6 +153,7 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 11.49,
     image: "taco.webp",
+    id: "363bfbe7-e216-4e0b-bde7-012e98f4527b",
   },
   {
     title: "Mediterranean",
@@ -153,6 +167,7 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 10.49,
     image: "mediterranean.webp",
+    id: "2b352f20-c5d6-4f9f-92c9-dea2ee623748",
   },
   {
     title: "Chicken Alfredo",
@@ -164,6 +179,7 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 10.99,
     image: "chicken-alfredo.webp",
+    id: "1a4bb800-3747-484c-98d3-77d83c7152b5",
   },
   {
     title: "Philly Cheese Steak",
@@ -176,6 +192,7 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 11.99,
     image: "philly-steak-cheese.webp",
+    id: "645307f3-21e2-43a7-8620-a79c2e0d5335",
   },
   {
     title: "Shrimp Scampi",
@@ -187,6 +204,7 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 12.99,
     image: "shrimp-scampi.webp",
+    id: "be305587-0343-4ecf-aad8-ed89dd728b43",
   },
   {
     title: "Sausage and Peppers",
@@ -199,12 +217,14 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 10.99,
     image: "sausage-peppers.webp",
+    id: "bed846da-591b-4fc3-a61f-997061cd93bb",
   },
   {
     title: "Prosciutto and Arugula",
     ingredients: ["Tomato Sauce", "Mozzarella Cheese", "Prosciutto", "Arugula"],
     price: 11.49,
     image: "prosciutto.webp",
+    id: "70e97b2e-9d7d-4f23-ae29-7d9b4faac5e9",
   },
   {
     title: "BBQ Veggie",
@@ -218,5 +238,6 @@ export const MENU_ITEMS: Pizza[] = [
     ],
     price: 9.99,
     image: "bbq-veggie.webp",
+    id: "aa7744d0-e15c-4d86-ab1e-9eb4996987d2",
   },
 ];
