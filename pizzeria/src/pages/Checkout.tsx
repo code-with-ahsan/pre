@@ -1,7 +1,9 @@
+import "react-credit-cards-2/dist/es/styles-compiled.css";
 import BackBtn from "../components/BackBtn";
 import { selectCartItems, selectCartTotal } from "../store/cartSlice";
 import { useAppSelector } from "../store/hooks";
 import { formatPrice } from "../utils/price-utils";
+import CreditCard from "../components/CreditCard";
 
 const Checkout = () => {
   const cartItems = useAppSelector(selectCartItems);
@@ -42,7 +44,14 @@ const Checkout = () => {
           </div>
         </section>
         <section>
-          <h2 className="text-2xl mb-4 card-title">Payment Details</h2>
+          <h2 className="text-2xl mb-4 card-title text-center w-full block">
+            Payment Details
+          </h2>
+          <CreditCard
+            onSubmit={(state) => {
+              console.log(state);
+            }}
+          />
         </section>
       </div>
     </div>

@@ -3,6 +3,8 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { Pizza } from "../data/menu-items";
 import { formatPrice } from "../utils/price-utils";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 interface CartState {
   items: Array<
@@ -78,4 +80,10 @@ export const selectCartTotal = (state: RootState) => {
   return formatPrice(total);
 };
 
-export default cartSlice.reducer;
+export default persistReducer(
+  {
+    key: "cart",
+    storage,
+  },
+  cartSlice.reducer,
+);
