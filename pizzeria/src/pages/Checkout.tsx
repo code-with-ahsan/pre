@@ -1,13 +1,22 @@
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 import BackBtn from "../components/BackBtn";
-import { selectCartItems, selectCartTotal } from "../store/cartSlice";
-import { useAppSelector } from "../store/hooks";
+import {
+  resetCart,
+  selectCartItems,
+  selectCartTotal,
+} from "../store/cartSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { formatPrice } from "../utils/price-utils";
 import CreditCard from "../components/CreditCard";
+import { createOrder } from "../store/ordersSlice";
+import { createOrderId } from "../utils/order-utils";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const cartItems = useAppSelector(selectCartItems);
   const cartTotal = useAppSelector(selectCartTotal);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   return (
     <div className="text-center my-6">
       <BackBtn to={"/cart"}>Back to cart</BackBtn>
@@ -49,7 +58,18 @@ const Checkout = () => {
           </h2>
           <CreditCard
             onSubmit={(state) => {
-              console.log(state);
+              const orderId = createOrderId();
+              dispatch(
+                createOrder({
+                  id: orderId,
+                  items: cartItems,
+                  total: cartTotal,
+                  creditCardNum: state.number,
+                  state: "pending",
+                }),
+              );
+              dispatch(resetCart());
+              navigate(`/order/${orderId}`);
             }}
           />
         </section>

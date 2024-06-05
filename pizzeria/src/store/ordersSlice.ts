@@ -2,9 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { Pizza } from "../data/menu-items";
-import { formatPrice } from "../utils/price-utils";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { randAlphaNumeric } from "@ngneat/falso";
+import { createOrderId } from "../utils/order-utils";
 
 export type Order = {
   id: string;
@@ -30,12 +31,18 @@ export const ordersSlice = createSlice({
   name: "orders",
   initialState,
   reducers: {
-    createOrder: (state, action: PayloadAction<Omit<Order, "id">>) => {
+    createOrder: (state, action: PayloadAction<Order>) => {
+      const maskedNumber = action.payload.creditCardNum.replace(
+        /\d(?=(?:\D*\d){4})/g,
+        "*",
+      );
+      console.log({ maskedNumber });
       const newOrder = {
-        id: self.crypto.randomUUID(),
         ...action.payload,
+        creditCardNum: maskedNumber,
       };
       state.items.push(newOrder);
+      return state;
     },
     removeOrder: (state, action: PayloadAction<{ id: string }>) => {
       state.items = state.items.filter((item) => item.id !== action.payload.id);

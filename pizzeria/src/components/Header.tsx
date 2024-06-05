@@ -1,17 +1,39 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../store/hooks";
 import { selectCartTotal, selectPizzasCount } from "../store/cartSlice";
+import { useState } from "react";
 
 const Header = () => {
   const cartTotal = useAppSelector(selectCartTotal);
   const pizzasCount = useAppSelector(selectPizzasCount);
+  const [isFocused, setIsFocused] = useState(false);
+  const [orderId, setOrderId] = useState("");
+  const navigate = useNavigate();
   return (
-    <div className="navbar bg-primary text-base-100 sticky top-0 z-40">
+    <div className="navbar bg-primary text-base-100 sticky top-0 z-40 gap-4">
       <div className="flex-1">
         <Link to={"/"} className="btn btn-ghost text-xl">
           Pizzeria
         </Link>
       </div>
+      <form
+        onSubmit={(ev) => {
+          ev.preventDefault();
+          navigate(`/order/${orderId}`);
+        }}
+        className="form-control"
+      >
+        <input
+          name="orderId"
+          required
+          onChange={(ev) => setOrderId(ev.target.value)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          type="text"
+          placeholder={isFocused ? "Enter order#" : "Find your order"}
+          className="input text-neutral-100 input-bordered w-24 md:w-auto"
+        />
+      </form>
       <div className="flex-none">
         {cartTotal ? (
           <div className="font-semibold">Cart total: €{cartTotal}</div>

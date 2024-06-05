@@ -6,12 +6,12 @@ import { formatPrice } from "../utils/price-utils";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
+export type CartItem = Pizza & {
+  quantity: number;
+};
+
 interface CartState {
-  items: Array<
-    Pizza & {
-      quantity: number;
-    }
-  >;
+  items: Array<CartItem>;
 }
 
 const initialState: CartState = {
@@ -51,10 +51,14 @@ export const cartSlice = createSlice({
     deleteFromCart: (state, action: PayloadAction<Pizza>) => {
       state.items = state.items.filter((item) => item.id !== action.payload.id);
     },
+    resetCart: (state) => {
+      state.items = [];
+    },
   },
 });
 
-export const { addItem, removeItem, deleteFromCart } = cartSlice.actions;
+export const { addItem, removeItem, deleteFromCart, resetCart } =
+  cartSlice.actions;
 
 export const selectCartItems = (state: RootState) => state.cart.items;
 
