@@ -57,6 +57,10 @@ export const { addItem, removeItem, deleteItem } = cartSlice.actions;
 
 const cartReducer = cartSlice.reducer;
 
+export const selectCartItems = (state: RootState) => {
+  return state.cart.items;
+}
+
 export const selectItemQuantity = (item: Pizza) => {
   return (state: RootState) => {
     const matchingCartItem = state.cart.items.find(existingItem => {
