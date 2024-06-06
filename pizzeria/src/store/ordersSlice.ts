@@ -4,8 +4,6 @@ import { RootState } from "./store";
 import { Pizza } from "../data/menu-items";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { randAlphaNumeric } from "@ngneat/falso";
-import { createOrderId } from "../utils/order-utils";
 
 export type Order = {
   id: string;
