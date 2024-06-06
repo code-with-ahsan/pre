@@ -1,22 +1,8 @@
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 import BackBtn from "../components/BackBtn";
-import {
-  resetCart,
-  selectCartItems,
-  selectCartTotal,
-} from "../store/cartSlice";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { formatPrice } from "../utils/price-utils";
 import CreditCard from "../components/CreditCard";
-import { createOrder } from "../store/ordersSlice";
-import { createOrderId } from "../utils/order-utils";
-import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const cartItems = useAppSelector(selectCartItems);
-  const cartTotal = useAppSelector(selectCartTotal);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   return (
     <div className="my-6">
       <BackBtn to={"/cart"}>Back to cart</BackBtn>
@@ -36,19 +22,15 @@ const Checkout = () => {
                 </tr>
               </thead>
               <tbody>
-                {cartItems.map((item) => {
-                  return (
-                    <tr key={item.id}>
-                      <td>{item.title}</td>
-                      <td>{item.quantity}</td>
-                      <td>€{formatPrice(item.quantity * item.price)}</td>
-                    </tr>
-                  );
-                })}
+                <tr>
+                  <td>Item title</td>
+                  <td>Item quantity</td>
+                  <td>Item price</td>
+                </tr>
                 <tr className="font-semibold">
                   <td>Subtotal: </td>
                   <td></td>
-                  <td>€{formatPrice(cartTotal)}</td>
+                  <td>€{0}</td>
                 </tr>
               </tbody>
             </table>
@@ -58,22 +40,7 @@ const Checkout = () => {
           <h2 className="text-2xl mb-4 card-title w-full block text-center">
             Payment Details
           </h2>
-          <CreditCard
-            onSubmit={(state) => {
-              const orderId = createOrderId();
-              dispatch(
-                createOrder({
-                  id: orderId,
-                  items: cartItems,
-                  total: cartTotal,
-                  creditCardNum: state.number,
-                  state: "pending",
-                }),
-              );
-              dispatch(resetCart());
-              navigate(`/order/${orderId}`);
-            }}
-          />
+          <CreditCard />
         </section>
       </div>
     </div>

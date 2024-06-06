@@ -1,18 +1,11 @@
 import "react-credit-cards-2/dist/es/styles-compiled.css";
-import {
-  ChangeEventHandler,
-  FC,
-  FocusEventHandler,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEventHandler, FocusEventHandler, useRef, useState } from "react";
 import {
   formatCVC,
   formatCreditCardNumber,
   formatExpirationDate,
 } from "../utils/card-utils";
 import Cards, { Focused } from "react-credit-cards-2";
-import { useKeyPress } from "../hooks/useKeyPress";
 
 type CardState = {
   number: string;
@@ -22,11 +15,7 @@ type CardState = {
   focus: undefined | Focused;
 };
 
-type CreditCardProps = {
-  onSubmit: (state: CardState) => void;
-};
-
-const CreditCard: FC<CreditCardProps> = ({ onSubmit }) => {
+const CreditCard = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [state, setState] = useState<CardState>({
     number: "",
@@ -58,46 +47,8 @@ const CreditCard: FC<CreditCardProps> = ({ onSubmit }) => {
     setState((prev) => ({ ...prev, focus: targetName }));
   };
 
-  /**
-   * Sets an individual input's value and propagates change event
-   * so we have the state updated too
-   * */
-  const setInputValue = (inputName: Focused, value: string) => {
-    const target = formRef.current?.elements.namedItem(
-      inputName,
-    ) as HTMLInputElement;
-    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-      window.HTMLInputElement.prototype,
-      "value",
-    )!.set;
-    nativeInputValueSetter!.call(target, value);
-    const inputEvent = new Event("input", { bubbles: true });
-    target.dispatchEvent(inputEvent);
-  };
-
-  /**
-   * Fills the card inputs with fake values
-   *
-   * */
-  const fillFormKeyHandler = () => {
-    setInputValue("number", "2222 2222 2222 2222");
-    setInputValue("cvc", "123");
-    setInputValue("expiry", "12/24");
-    setInputValue("name", "Test User");
-  };
-
-  // registring ctrl + shift + H to fill the form with dummy values
-  useKeyPress("H", fillFormKeyHandler);
-
   return (
-    <form
-      ref={formRef}
-      onSubmit={(ev) => {
-        ev.preventDefault();
-        onSubmit(state);
-      }}
-      className="flex flex-col gap-4 items-center"
-    >
+    <form ref={formRef} className="flex flex-col gap-4 items-center">
       <Cards
         number={state.number}
         expiry={state.expiry}
@@ -160,9 +111,6 @@ const CreditCard: FC<CreditCardProps> = ({ onSubmit }) => {
           PAY
         </button>
       </div>{" "}
-      <small className="text-center italic text-xs">
-        Press Ctrl + Shift + H to fill the form with fake values
-      </small>
     </form>
   );
 };

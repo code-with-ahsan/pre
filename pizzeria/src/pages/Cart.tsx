@@ -1,12 +1,8 @@
 import { Link } from "react-router-dom";
-import MenuItem from "../components/MenuItem";
-import { selectCartItems, selectCartTotal } from "../store/cartSlice";
-import { useAppSelector } from "../store/hooks";
 import BackBtn from "../components/BackBtn";
 
 const Cart = () => {
-  const cartItems = useAppSelector(selectCartItems);
-  const totalPrice = useAppSelector(selectCartTotal);
+  const cartItems = [{}];
   return (
     <div className="text-center my-6">
       <BackBtn to={"/menu"}>Back to menu</BackBtn>
@@ -14,14 +10,11 @@ const Cart = () => {
       {cartItems.length ? (
         <>
           <ul className="my-4 w-full flex flex-col gap-4">
-            {cartItems.map((item) => {
-              const { quantity, ...itemWithoutQuantity } = item;
-              return <MenuItem item={itemWithoutQuantity} />;
-            })}
+            {/* Cart items here */}{" "}
           </ul>
           <div className="flex text-2xl px-4 w-full font-semibold items-center justify-between">
             <span>Total price</span>
-            <span className="text-primary">€{totalPrice}</span>
+            <span className="text-primary">€{0}</span>
           </div>
           <Link to={"/checkout"} className="btn btn-primary w-44">
             Checkout

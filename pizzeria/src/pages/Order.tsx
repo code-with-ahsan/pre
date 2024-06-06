@@ -1,35 +1,14 @@
-import { Params, useLoaderData } from "react-router-dom";
-import { Order as IOrder } from "../store/ordersSlice";
-import { persistor, store } from "../store/store";
 import MenuItem from "../components/MenuItem";
 
-const onStoreReady = async () => {
-  return new Promise((resolve) => {
-    const timer = setInterval(() => {
-      if (persistor.getState().bootstrapped) {
-        clearInterval(timer);
-        resolve(null);
-      }
-    }, 500);
-  });
-};
-
-export const orderLoader = async ({ params }: { params: Params<string> }) => {
-  const { orderId } = params;
-  await onStoreReady();
-  const { items } = store.getState().orders;
-  const matchingOrder = items.find((order) => order.id === orderId!);
-  if (!matchingOrder) {
-    throw new Error(`Order #${orderId} not found`);
-  }
-  return matchingOrder;
-};
-
 const Order = () => {
-  const order = useLoaderData() as IOrder;
+  const order = {
+    items: [],
+    total: 0,
+    creditCardNum: "**** **** **** 1234",
+  };
   return (
     <div className="my-6">
-      <h2 className="text-3xl text-center my-4">Order #{order.id}</h2>
+      <h2 className="text-3xl text-center my-4">Order #12tyq</h2>
       <div className="card bg-base-100 p-4">
         <div className="card-body gap-8">
           <div className="mx-5 card-title">Items</div>
