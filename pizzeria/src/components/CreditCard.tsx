@@ -96,7 +96,7 @@ const CreditCard: FC<CreditCardProps> = ({ onSubmit }) => {
         ev.preventDefault();
         onSubmit(state);
       }}
-      className="my-8 px-8 flex flex-col gap-4"
+      className="flex flex-col gap-4 items-center"
     >
       <Cards
         number={state.number}
@@ -105,32 +105,32 @@ const CreditCard: FC<CreditCardProps> = ({ onSubmit }) => {
         name={state.name}
         focused={state.focus}
       />
-      <div className="form-group flex flex-col gap-2">
-        <input
-          type="text"
-          name="number"
-          placeholder="Card Number"
-          pattern="^(\d\s?){16}(?=\D*$)|(\d\s?){19}(?=\D*$)$"
-          required
-          className="input input-bordered w-full max-w-xs"
-          onChange={handleInputChange}
-          onFocus={handleInputFocus}
-        />
-        <small>Eg: XXXX XXXX XXXX XXXX(XXX)</small>
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          name="name"
-          className="input input-bordered w-full max-w-xs"
-          placeholder="Name"
-          required
-          onChange={handleInputChange}
-          onFocus={handleInputFocus}
-        />
-      </div>
-      <div className="row">
-        <div className="col-6">
+      <div className="form-inputs w-full px-8 flex flex-col gap-4">
+        <div className="flex flex-col gap-2 w-full">
+          <input
+            type="text"
+            name="number"
+            placeholder="Card Number"
+            pattern="^(\d\s?){16}(?=\D*$)|(\d\s?){19}(?=\D*$)$"
+            required
+            className="input input-bordered w-full max-w-xs"
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+          />
+          <small>Eg: XXXX XXXX XXXX XXXX(XXX)</small>
+        </div>
+        <div>
+          <input
+            type="text"
+            name="name"
+            className="input input-bordered w-full max-w-xs"
+            placeholder="Name"
+            required
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+          />
+        </div>
+        <div>
           <input
             type="tel"
             name="expiry"
@@ -142,7 +142,7 @@ const CreditCard: FC<CreditCardProps> = ({ onSubmit }) => {
             onFocus={handleInputFocus}
           />
         </div>
-        <div className="col-6">
+        <div>
           <input
             type="tel"
             name="cvc"
@@ -155,7 +155,7 @@ const CreditCard: FC<CreditCardProps> = ({ onSubmit }) => {
           />
         </div>
       </div>
-      <div className="form-actions">
+      <div className="form-actions w-44">
         <button type="submit" className="btn btn-primary btn-block">
           PAY
         </button>

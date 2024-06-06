@@ -6,7 +6,7 @@ const Root = () => {
     <>
       <Header />
       <main>
-        <div className="py-4 min-h-[calc(100vh-66px)] bg-base-100">
+        <div className="py-4 min-h-[calc(100vh-64px)] bg-base-100">
           <section className="max-w-3xl mx-auto">
             <Outlet />
           </section>{" "}
