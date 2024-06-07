@@ -1,3 +1,4 @@
+import BackBtn from "../components/BackBtn";
 import MenuItem from "../components/MenuItem";
 
 const Order = () => {
@@ -8,6 +9,7 @@ const Order = () => {
   };
   return (
     <div className="my-6">
+      <BackBtn to={"/menu"}>Back to menu</BackBtn>
       <h2 className="text-3xl text-center my-4">Order #12tyq</h2>
       <div className="card bg-base-100 p-4">
         <div className="card-body gap-8">
