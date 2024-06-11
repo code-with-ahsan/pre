@@ -22,7 +22,7 @@ export const createContact = async (contact: Partial<Contact>) => {
     body: JSON.stringify(contact),
   });
   const contactResp = await resp.json();
-  return { contact: contactResp.contact };
+  return contactResp.contact as Contact;
 };
 
 export const deleteContact = async (contactId: string) => {
@@ -32,6 +32,6 @@ export const deleteContact = async (contactId: string) => {
       "Content-Type": "application/json",
     },
   });
-  await resp.json();
-  return true;
+  const contact = await resp.json();
+  return contact as Contact;
 };

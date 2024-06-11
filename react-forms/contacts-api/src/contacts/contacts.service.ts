@@ -49,7 +49,8 @@ export class ContactsService {
   }
 
   remove(uuid: string) {
+    const matching = contacts.find((item) => item.login.uuid === uuid);
     contacts = contacts.filter((item) => item.login.uuid !== uuid);
-    return {};
+    return matching;
   }
 }

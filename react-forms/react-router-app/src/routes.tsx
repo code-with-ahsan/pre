@@ -6,10 +6,9 @@ import {
 } from "react-router-dom";
 import NotFoundPage from "./pages/NotFound";
 import RootLayout from "./pages/Root";
-import ContactDetailPage, { contactByIdLoader } from "./pages/ContactDetail";
+import ContactDetailPage from "./pages/ContactDetail";
 import { ContactNotFoundPage } from "./pages/ContactNotFound";
-import ContactsPage, { contactsLoader, createContactAction } from "./pages/Contacts";
-import { destroyContactAction } from "./pages/ContactDestroy";
+import ContactsPage from "./pages/Contacts";
 import About from "./pages/About/About";
 import Info from "./pages/About/Info";
 import Settings from "./pages/About/Settings";
@@ -34,19 +33,14 @@ const appRouter = createBrowserRouter(
 
       <Route
         path="contacts"
-        action={createContactAction}
-        loader={contactsLoader}
         element={<ContactsPage />}
       />
 
       <Route
         path="contacts/:contactId"
-        loader={contactByIdLoader}
         element={<ContactDetailPage />}
         errorElement={<ContactNotFoundPage />}
       />
-
-      <Route action={destroyContactAction} path="contacts/:contactId/destroy" />
 
     </Route>,
   ),

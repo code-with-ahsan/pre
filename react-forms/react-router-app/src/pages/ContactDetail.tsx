@@ -1,23 +1,30 @@
-import { getContactById } from "../api/contactsApi";
-import { Form, Params, useLoaderData } from "react-router-dom";
-
-export const contactByIdLoader = async ({
-  params
-}: {
-  params: Params
-}) => {
-  const { contactId } = params;
-  const contact = await getContactById(contactId!);
-  if (!contact) {
-    throw new Error("Contact not found.");
-  }
-  return {
-    contact
-  }
-}
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { deleteContactAction, getContactByIdAction, selectIsPending, selectOpenedContact } from "../store/contactsSlice";
 
 const ContactDetailPage = () => {
-  const { contact } = useLoaderData() as Awaited<ReturnType<typeof contactByIdLoader>>;
+  const params = useParams();
+  const { contactId } = params;
+  const dispatch = useAppDispatch();
+  const contact = useAppSelector(selectOpenedContact);
+  const isPending = useAppSelector(selectIsPending);
+  const navigate = useNavigate();
+  const [loadingError, setLoadingError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    dispatch(getContactByIdAction(contactId!)).unwrap().catch(err => {
+      setLoadingError(err);
+    });
+  }, []);
+
+  if (loadingError) {
+    throw new Error((loadingError as Error).message);
+  }
+
+  if (!contact || isPending) {
+    return null;
+  }
 
   return (
     <div className="card card-compact w-96 mx-auto bg-base-100 shadow-xl">
@@ -44,16 +51,16 @@ const ContactDetailPage = () => {
         </h2>
         <p>{contact.email}</p>
         <div className="card-actions justify-end">
-          <Form method="POST" onSubmit={(event) => {
+          <button onClick={() => {
             const result = confirm('Confirm deletion of this contact.');
             if (!result) {
-              event.preventDefault();
+              return;
             }
-          }} action={`/contacts/${contact.login.uuid}/destroy`}>
-            <button className="btn btn-outline btn-error btn-sm">
-              delete
-            </button>
-          </Form>
+            dispatch(deleteContactAction(contact.login.uuid));
+            navigate('/contacts');
+          }} className="btn btn-outline btn-error btn-sm">
+            delete
+          </button>
         </div>
       </div>
     </div>
