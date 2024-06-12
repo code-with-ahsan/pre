@@ -1,14 +1,18 @@
 import { Link } from "react-router-dom";
-import { FormEventHandler, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { createContactAction, deleteContactAction, getContactsAction, selectContacts } from "../store/contactsSlice";
+import { FormEventHandler, useEffect, useState } from "react";
+import { Contact } from "../types";
+import { createContact, deleteContact, getContacts } from "../api/contactsApi";
 
 const ContactsPage = () => {
-  const dispatch = useAppDispatch();
-  const contacts = useAppSelector(selectContacts);
+  const [contacts, setContacts] = useState<Contact[]>([]);
+
+  const getContactsFromServer = async () => {
+    const contactsFromServer = await getContacts();
+    setContacts(contactsFromServer);
+  }
 
   useEffect(() => {
-    dispatch(getContactsAction())
+    getContactsFromServer();
   }, []);
 
 
@@ -23,15 +27,16 @@ const ContactsPage = () => {
       throw new Error('First name, last name, and email are required');
     }
 
-    dispatch(createContactAction({
+    createContact({
       name: {
         first,
         last
       },
       email
-    })).then(() => {
+    }).then((contact) => {
+      setContacts(contactItems => ([contact, ...contactItems]))
       target.reset();
-    });
+    })
   }
 
   return (
@@ -129,12 +134,13 @@ const ContactsPage = () => {
                       </Link>
                     </td>
                     <th>
-                      <button onClick={() => {
+                      <button onClick={async () => {
                         const result = confirm('Confirm deletion of this contact.');
                         if (!result) {
                           return;
                         }
-                        dispatch(deleteContactAction(contact.login.uuid));
+                        await deleteContact(contact.login.uuid);
+                        setContacts(contactItems => contactItems.filter(item => item.login.uuid !== contact.login.uuid))
                       }} className="btn btn-outline btn-error btn-xs">
                         delete
                       </button>

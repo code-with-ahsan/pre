@@ -1,28 +1,25 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { deleteContactAction, getContactByIdAction, selectIsPending, selectOpenedContact } from "../store/contactsSlice";
+import { Contact } from "../types";
+import { deleteContact, getContactById } from "../api/contactsApi";
 
 const ContactDetailPage = () => {
   const params = useParams();
   const { contactId } = params;
-  const dispatch = useAppDispatch();
-  const contact = useAppSelector(selectOpenedContact);
-  const isPending = useAppSelector(selectIsPending);
+  const [contact, setContact] = useState<Contact | null>(null);
   const navigate = useNavigate();
-  const [loadingError, setLoadingError] = useState<Error | null>(null);
 
   useEffect(() => {
-    dispatch(getContactByIdAction(contactId!)).unwrap().catch(err => {
-      setLoadingError(err);
-    });
+    getContactById(contactId!).then((contactFromServer) => {
+      if (!contactFromServer) {
+        throw new Error('Contact not Found');
+      }
+      setContact(contactFromServer);
+    })
   }, []);
 
-  if (loadingError) {
-    throw new Error((loadingError as Error).message);
-  }
 
-  if (!contact || isPending) {
+  if (!contact) {
     return null;
   }
 
@@ -56,7 +53,7 @@ const ContactDetailPage = () => {
             if (!result) {
               return;
             }
-            dispatch(deleteContactAction(contact.login.uuid));
+            deleteContact(contact.login.uuid);
             navigate('/contacts');
           }} className="btn btn-outline btn-error btn-sm">
             delete
