@@ -3,14 +3,21 @@ import { Contact } from "../types";
 export const getContacts = async () => {
   const resp = await fetch("http://localhost:3000/contacts");
   const respJson = await resp.json();
+  if (respJson.error) {
+    throw respJson.error;
+  }
   return respJson.contacts as Contact[];
 };
 
 export const getContactById = async (uuid: string) => {
   const contacts = await getContacts();
-  return contacts.find((item) => {
+  const contact = contacts.find((item) => {
     return item.login.uuid === uuid;
   });
+  if (!contact) {
+    throw new Error('Contact Not Found');
+  }
+  return contact;
 };
 
 export const createContact = async (contact: Partial<Contact>) => {
@@ -22,6 +29,9 @@ export const createContact = async (contact: Partial<Contact>) => {
     body: JSON.stringify(contact),
   });
   const contactResp = await resp.json();
+  if (contactResp.error) {
+    throw contactResp.error;
+  }
   return contactResp.contact as Contact;
 };
 
@@ -32,6 +42,9 @@ export const deleteContact = async (contactId: string) => {
       "Content-Type": "application/json",
     },
   });
-  const contact = await resp.json();
-  return contact as Contact;
+  const contactResp = await resp.json();
+  if (contactResp.error) {
+    throw contactResp.error;
+  }
+  return contactResp as Contact;
 };
