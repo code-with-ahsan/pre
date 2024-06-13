@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Contact } from "../types";
-import { deleteContact, getContactById } from "../api/contactsApi";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { deleteContactAction, getContactByIdAction, selectOpenedContact } from "../store/contactsSlice";
 
 const ContactDetailPage = () => {
   const params = useParams();
   const { contactId } = params;
-  const [contact, setContact] = useState<Contact | null>(null);
+  const contact = useAppSelector(selectOpenedContact);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    getContactById(contactId!).then((contactFromServer) => {
-      if (!contactFromServer) {
-        throw new Error('Contact not Found');
-      }
-      setContact(contactFromServer);
-    })
+    dispatch(getContactByIdAction(contactId!)).unwrap().catch(err => {
+      setError(err);
+    });
   }, []);
 
+  if (error) {
+    throw error;
+  } 
 
   if (!contact) {
     return null;
@@ -48,12 +50,12 @@ const ContactDetailPage = () => {
         </h2>
         <p>{contact.email}</p>
         <div className="card-actions justify-end">
-          <button onClick={() => {
+          <button onClick={async () => {
             const result = confirm('Confirm deletion of this contact.');
             if (!result) {
               return;
             }
-            deleteContact(contact.login.uuid);
+            await dispatch(deleteContactAction(contact.login.uuid));
             navigate('/contacts');
           }} className="btn btn-outline btn-error btn-sm">
             delete

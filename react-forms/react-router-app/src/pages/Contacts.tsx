@@ -1,18 +1,14 @@
 import { Link } from "react-router-dom";
-import { FormEventHandler, useEffect, useState } from "react";
-import { Contact } from "../types";
-import { createContact, deleteContact, getContacts } from "../api/contactsApi";
+import { FormEventHandler, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { createContactAction, deleteContactAction, getContactsAction, selectContacts } from "../store/contactsSlice";
 
 const ContactsPage = () => {
-  const [contacts, setContacts] = useState<Contact[]>([]);
-
-  const getContactsFromServer = async () => {
-    const contactsFromServer = await getContacts();
-    setContacts(contactsFromServer);
-  }
+  const contacts = useAppSelector(selectContacts);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getContactsFromServer();
+    dispatch(getContactsAction());
   }, []);
 
 
@@ -27,16 +23,16 @@ const ContactsPage = () => {
       throw new Error('First name, last name, and email are required');
     }
 
-    createContact({
+    dispatch(createContactAction({
       name: {
         first,
         last
       },
       email
-    }).then((contact) => {
-      setContacts(contactItems => ([contact, ...contactItems]))
+    })).then(() => {
       target.reset();
     })
+    
   }
 
   return (
@@ -139,8 +135,7 @@ const ContactsPage = () => {
                         if (!result) {
                           return;
                         }
-                        await deleteContact(contact.login.uuid);
-                        setContacts(contactItems => contactItems.filter(item => item.login.uuid !== contact.login.uuid))
+                        dispatch(deleteContactAction(contact.login.uuid));
                       }} className="btn btn-outline btn-error btn-xs">
                         delete
                       </button>
